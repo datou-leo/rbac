@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    {load href="__STATIC__/bootstrap/css/bootstrap.min.css" /}
+    {load href="__STATIC__/css/dashboard.css" /}
+    {load href="/static/js/jquery.min.js" /}
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Rbac</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/">首页</a></li>
+            </ul>
+            {php}$u=current_user();{/php}
+            {notempty name="u"}
+            <p class="navbar-text navbar-right">Hi,  {$u.name}</p>
+            {/notempty}
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container-fluid">
+    <div class="col-sm-2 col-md-2 col-lg-2 sidebar">
+        <ul class="nav nav-sidebar">
+            <li>权限演示页面</li>
+            <li><a href="{:url('test/page1')}">测试页面一</a></li>
+            <li><a href="{:url('test/page2')}">测试页面二</a></li>
+            <li><a href="{:url('test/page3')}">测试页面三</a></li>
+            <li><a href="{:url('test/page4')}">测试页面四</a></li>
+            <li>系统设置</li>
+            <li><a href="{:url('user/index')}">用户管理</a></li>
+            <li><a href="{:url('role/index')}">角色管理</a></li>
+            <li><a href="{:url('access/index')}">权限管理</a></li>
+        </ul>
+    </div>
+
+    <div class="col-sm-10 col-sm-offset-2  col-md-10 col-md-offset-2 col-lg-10 col-offset-2">
+        {__CONTENT__}
+
+        <hr />
+        <footer>
+            <p class="pull-left">chendongpu</p>
+            <p class="pull-right">power by st</p>
+        </footer>
+    </div>
+</div>
+
+
+
+
+
+{load href="/static/bootstrap/js/bootstrap.min.js" /}
+</body>
+</html>

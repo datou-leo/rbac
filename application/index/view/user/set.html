@@ -1,0 +1,89 @@
+<div class="row">
+    <div class="col-xs-9 col-sm-9 col-md-9  col-lg-9">
+        <h5>新增用户</h5>
+    </div>
+</div>
+<hr/>
+<div class="row">
+    <div class="form-horizontal user_set_wrap" role="form">
+        <div class="form-group">
+            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">用户名</label>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <input type="text" class="form-control" name="name" placeholder="请输入用户名" value="{$user? $user['name'] : ''}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">邮箱</label>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <input type="text" class="form-control" name="email" placeholder="请输入邮箱" value="{$user? $user['email'] : ''}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">所属角色</label>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                {notempty name="role_list"}
+                {volist name="role_list" id="vo"}
+                    <input type="checkbox" name="role_ids[]" value="{$vo.id}" {in name="$vo.id" value="$related_role_ids"} checked="checked" {/in} > {$vo.name}
+                {/volist}
+                {/notempty}
+
+            </div>
+        </div>
+
+
+
+
+        <div class="col-xs-6 col-xs-offset-2 col-sm-6 col-sm-offset-2 col-md-6  col-md-offset-2 col-lg-6 col-sm-lg-2 ">
+            <input type="hidden" name="id" value="{$user? $user['id'] : ''}"/>
+            <button type="button" class="btn btn-primary pull-right  save">确定</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var user_set_ops = {
+        init:function(){
+            this.eventBind();
+        },
+        eventBind:function(){
+            $(".user_set_wrap .save").click( function(){
+                var name = $(".user_set_wrap input[name='name']").val();
+                var email = $(".user_set_wrap input[name='email']").val();
+                if( name.length < 1 ){
+                    alert("请输入合法的用户名~~");
+                    return false;
+                }
+
+                var role_ids = [];
+                $(".user_set_wrap input[name='role_ids[]'").each(function(){
+                    if($(this).prop("checked")){
+                        role_ids.push($(this).val());
+                    }
+                });
+
+                $.ajax({
+                    url:"{:url('user/set')}",
+                    type:'POST',
+                    data:{
+                        id:$(".user_set_wrap input[name='id']").val(),
+                        name:name,
+                        email:email,
+                        role_ids:role_ids
+                    },
+                    dataType:'json',
+                    success:function( res ){
+                        alert( res.msg );
+                        if( res.code == 200 ){
+                            window.location.href = "{:url('user/index')}";
+                        }
+                    }
+                });
+            });
+        }
+    };
+    $(document).ready(function(){
+        user_set_ops.init();
+    });
+</script>

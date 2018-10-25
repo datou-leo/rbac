@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-xs-9 col-sm-9 col-md-9  col-lg-9">
+        <h5>新增角色</h5>
+    </div>
+</div>
+<hr/>
+<div class="row">
+    <div class="form-horizontal role_set_wrap" role="form">
+        <div class="form-group">
+            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">角色</label>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <input type="text" class="form-control" name="name" placeholder="请输入角色" value="{$role? $role['name'] : ''}">
+            </div>
+        </div>
+        <div class="col-xs-6 col-xs-offset-2 col-sm-6 col-sm-offset-2 col-md-6  col-md-offset-2 col-lg-6 col-sm-lg-2 ">
+            <input type="hidden" name="id" value="{$role? $role['id'] : ''}"/>
+            <button type="button" class="btn btn-primary pull-right  save">确定</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var role_set_ops = {
+        init:function(){
+            this.eventBind();
+        },
+        eventBind:function(){
+            $(".role_set_wrap .save").click( function(){
+                var name = $(".role_set_wrap input[name='name']").val();
+                if( name.length < 1 ){
+                    alert("请输入合法的角色名称~~");
+                    return false;
+                }
+
+                $.ajax({
+                    url:"{:url('role/set')}",
+                    type:'POST',
+                    data:{
+                        id:$(".role_set_wrap input[name='id']").val(),
+                        name:name
+                    },
+                    dataType:'json',
+                    success:function( res ){
+                        alert( res.msg );
+                        if( res.code == 200 ){
+                            window.location.href = "{:url('role/index')}";
+                        }
+                    }
+                });
+            });
+        }
+    };
+    $(document).ready(function(){
+        role_set_ops.init();
+    });
+</script>

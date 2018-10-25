@@ -1,0 +1,93 @@
+<div class="row">
+    <div class="col-xs-9 col-sm-9 col-md-9  col-lg-9">
+        <h5>新增权限</h5>
+    </div>
+</div>
+<hr/>
+<div class="row">
+    <div class="form-horizontal access_set_wrap" role="form">
+        <div class="form-group">
+            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">权限名称</label>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <input type="text" class="form-control" name="title" placeholder="请输入权限" value="{$access? $access['title'] : ''}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">权限名称</label>
+            <div class="col-xs-6  col-sm-6  col-md-6   col-lg-6 col-sm-lg-2 ">
+                {notempty name="$access"}
+                <textarea  class="form-control"  name="urls">{$access['urls']|parseUrls2}</textarea>
+                {/notempty}
+
+                {empty  name="$access"}
+                <textarea  class="form-control"  name="urls"></textarea>
+                {/empty}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-6 col-xs-offset-2 col-sm-6 col-sm-offset-2 col-md-6  col-md-offset-2 col-lg-6 col-sm-lg-2 ">
+                <input type="hidden" name="id" value="{$access? $access['id'] : ''}"/>
+                <button type="button" class="btn btn-primary pull-left  save">确定</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    var access_set_ops = {
+        init:function(){
+            this.eventBind();
+        },
+        eventBind:function(){
+
+
+            $(".access_set_wrap .save").click( function(){
+
+                var btn_target = $(this);
+
+                if( btn_target.hasClass("disabled") ){
+                    alert("正在处理，请不要重复提交~~");
+                    return false;
+                }
+
+                var title = $(".access_set_wrap input[name='title']").val();
+
+                if( title.length < 1 ){
+                    alert("请输入合法的权限名称~~");
+                    return false;
+                }
+                var urls = $(".access_set_wrap textarea[name='urls']").val();
+                if( urls.length < 1 ){
+                    alert("请输入合法的urls~~");
+                    return false;
+                }
+
+                btn_target.addClass("disabled");
+
+                $.ajax({
+                    url:"{:url('access/set')}",
+                    type:'POST',
+                    data:{
+                        id:$(".access_set_wrap input[name='id']").val(),
+                        title:title,
+                        urls:urls
+                    },
+                    dataType:'json',
+                    success:function( res ){
+                        btn_target.removeClass("disabled");
+                        alert( res.msg );
+                        if( res.code == 200 ){
+                            window.location.href = "{:url('access/index')}";
+                        }
+                    }
+                });
+            });
+        }
+    };
+    $(document).ready(function(){
+        access_set_ops.init();
+    });
+</script>

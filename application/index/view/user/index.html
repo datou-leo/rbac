@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-xs-9 col-sm-9 col-md-9  col-lg-9">
+        <h5>用户列表</h5>
+    </div>
+    <div class="col-xs-3 col-sm-3 col-md-3  col-lg-3">
+        <a href="{:url('user/set')}" class="btn btn-link pull-right">添加用户</a>
+    </div>
+</div>
+<hr/>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>用户名</th>
+            <th>邮箱</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {empty name="list"}
+        <tr><td colspan="3">暂无数据</td></tr>
+        {/empty}
+
+        {notempty name="list"}
+            {volist name="list" id="vo"}
+            <tr>
+                <td>{$vo.name}</td>
+                <td>{$vo.email}</td>
+                <td>
+                    <a href="{:url('user/set',['id'=>$vo.id])}">编辑</a>
+                </td>
+            </tr>
+            {/volist}
+        {/notempty}
+
+
+        </tbody>
+    </table>
+</div>
