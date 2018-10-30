@@ -1,5 +1,15 @@
 # rbac
 基于thinkphp开发的简单的rbac事例
+<h2>作者长期从事程序开发</h2>
+<pre>
+<ul>
+<li>昵称:datou</li>
+<li>qq:2323178881</li>
+<li>Tel:18329123270</li>
+<li>微信:datou-leo</li>
+<li>ci使用开发群:646864389</li>
+</ul>
+<pre>
 # 界面预览
 
 1.管理员访问用户列表
@@ -24,16 +34,7 @@
 7.用户访问无权限页面
 ![image](截图/用户访问无权限页面.png)
 
-<h2>作者长期从事程序开发</h2>
-<pre>
-<ul>
-<li>昵称:datou</li>
-<li>qq:2323178881</li>
-<li>Tel:18329123270</li>
-<li>微信:datou-leo</li>
-<li>ci使用开发群:646864389</li>
-</ul>
-<pre>
+
 
 
 
